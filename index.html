@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Portal Digital — Wiki · Radio · TV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0f0f5;
+    --muted: rgba(240,240,245,0.5);
+    --accent: #7c3aed;
+    --accent2: #4f46e5;
+    --red: #e53e3e;
+    --green: #10b981;
+    --gold: #f59e0b;
+    --radius: 12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 58px;
+  }
+  .nav-brand {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, #a78bfa, #60a5fa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+  .nav-live {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--red);
+    background: rgba(229,62,62,0.1);
+    border: 1px solid rgba(229,62,62,0.2);
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    padding: 6rem 2rem 5rem;
+    text-align: center;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(124,58,237,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(79,70,229,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 80% 60%, rgba(16,185,129,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 11px; font-weight: 500;
+    color: #a78bfa;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 .accent { color: #a78bfa; }
+  .hero p {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+  .hero-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 13px; font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #6d28d9; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border2);
+  }
+  .btn-ghost:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 2.5rem;
+    margin-top: 3.5rem;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 1.6rem; font-weight: 700; color: var(--text); font-family: 'Space Grotesk',sans-serif; }
+  .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: 0.04em; }
+
+  /* ── SECTIONS ── */
+  .section { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .tag-purple { color: #a78bfa; }
+  .tag-red    { color: #fc8181; }
+  .tag-green  { color: #6ee7b7; }
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
+  }
+  .section-desc { color: var(--muted); max-width: 520px; margin-bottom: 2rem; font-size: 14px; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* ── WIKI ── */
+  .wiki-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .wiki-sidebar {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: sticky; top: 72px;
+  }
+  .wiki-sidebar-header {
+    padding: 0.9rem 1rem;
+    background: rgba(124,58,237,0.12);
+    border-bottom: 1px solid var(--border);
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: #a78bfa;
+  }
+  .wiki-nav { list-style: none; padding: 0.5rem 0; }
+  .wiki-nav li a {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 1rem;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.12s;
+  }
+  .wiki-nav li a:hover, .wiki-nav li a.active {
+    color: var(--text);
+    background: rgba(255,255,255,0.05);
+  }
+  .wiki-nav li a .letter {
+    width: 22px; height: 22px;
+    background: rgba(124,58,237,0.2);
+    border-radius: 5px;
+    font-size: 11px; font-weight: 700;
+    color: #a78bfa;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .wiki-content { display: flex; flex-direction: column; gap: 1rem; }
+  .wiki-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.15s;
+  }
+  .wiki-card:hover { border-color: var(--border2); }
+  .wiki-card-header {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 0.5rem;
+  }
+  .wiki-letter-badge {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(79,70,229,0.3));
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 16px;
+    color: #a78bfa;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .wiki-term { font-weight: 600; font-size: 15px; }
+  .wiki-def { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .wiki-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 0.7rem; }
+  .wiki-tag {
+    font-size: 10px; padding: 2px 9px;
+    background: rgba(124,58,237,0.12);
+    border: 1px solid rgba(124,58,237,0.2);
+    border-radius: 999px;
+    color: #c4b5fd;
+    text-decoration: none;
+  }
+  .wiki-tag:hover { background: rgba(124,58,237,0.25); }
+  .wiki-search {
+    display: flex; gap: 8px; margin-bottom: 1rem;
+  }
+  .wiki-search input {
+    flex: 1;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .wiki-search input::placeholder { color: var(--muted); }
+  .wiki-search input:focus { border-color: var(--accent); }
+
+  /* ── RADIO ── */
+  .radio-player {
+    background: linear-gradient(135deg, #1a0a2e 0%, #0a1628 100%);
+    border: 1px solid rgba(124,58,237,0.25);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .radio-player::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(124,58,237,0.25), transparent 70%);
+    pointer-events: none;
+  }
+  .radio-icon {
+    width: 64px; height: 64px;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin: 0 auto 1rem;
+  }
+  .radio-title { font-family:'Space Grotesk',sans-serif; font-size: 1.2rem; font-weight: 700; }
+  .radio-subtitle { color: var(--muted); font-size: 12px; margin-bottom: 1.5rem; }
+  .radio-embed {
+    width: 100%; border-radius: 10px; border: none;
+    overflow: hidden;
+  }
+  .radio-channels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .radio-ch {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    transition: border-color 0.15s;
+  }
+  .radio-ch:hover { border-color: var(--border2); }
+  .radio-ch-top { display: flex; align-items: center; gap: 10px; margin-bottom: 0.4rem; }
+  .radio-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .radio-ch-name { font-weight: 600; font-size: 14px; }
+  .radio-ch-genre { font-size: 12px; color: var(--muted); }
+  .radio-ch a {
+    display: inline-block;
+    margin-top: 0.6rem;
+    font-size: 12px;
+    color: #a78bfa;
+    text-decoration: none;
+  }
+  .radio-ch a:hover { text-decoration: underline; }
+
+  /* ── TV ── */
+  .tv-player-wrap { background:var(--bg3); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:1.5rem; }
+  .tv-player-screen { width:100%; aspect-ratio:16/9; background:#000; }
+  .tv-player-screen iframe { width:100%; height:100%; border:none; display:block; }
+  .tv-player-info { padding:1.2rem 1.5rem; border-top:1px solid var(--border); }
+  .tv-player-badges { display:flex; align-items:center; gap:8px; margin-bottom:0.5rem; }
+  .tv-cat-badge { font-size:10px; font-weight:600; padding:2px 10px; border-radius:999px; background:rgba(79,70,229,0.15); border:1px solid rgba(79,70,229,0.25); color:#818cf8; }
+  .tv-player-title { font-family:'Space Grotesk',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:0.4rem; }
+  .tv-player-desc { font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:0.8rem; }
+  .tv-player-meta { display:flex; gap:8px; flex-wrap:wrap; }
+  .tv-meta-pill { font-size:11px; padding:3px 10px; border-radius:999px; border:1px solid var(--border2); color:var(--muted); }
+  .tv-meta-pill.live { background:rgba(229,62,62,0.1); border-color:rgba(229,62,62,0.25); color:#fc8181; }
+  .tv-meta-pill.vod { background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.25); color:#6ee7b7; }
+  .tv-cats { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:1rem; }
+  .tv-cat { background:transparent; border:1px solid var(--border); border-radius:999px; padding:5px 14px; font-size:12px; font-weight:500; color:var(--muted); cursor:pointer; transition:all 0.15s; font-family:inherit; }
+  .tv-cat:hover { color:var(--text); border-color:var(--border2); }
+  .tv-cat.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .tv-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(155px, 1fr)); gap:10px; }
+  .tv-card { background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; cursor:pointer; transition:border-color 0.15s, transform 0.12s; }
+  .tv-card:hover { border-color:var(--border2); transform:translateY(-2px); }
+  .tv-card.active-ch { border-color:var(--accent); }
+  .tv-thumb { aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; font-size:24px; position:relative; }
+  .tv-play-btn { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); opacity:0; transition:opacity 0.15s; }
+  .tv-card:hover .tv-play-btn, .tv-card.active-ch .tv-play-btn { opacity:1; }
+  .tv-card.active-ch .tv-play-btn { background:rgba(124,58,237,0.35); }
+  .tv-play-btn span { width:34px; height:34px; background:rgba(255,255,255,0.92); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; color:#000; }
+  .tv-info { padding:0.65rem 0.85rem; }
+  .tv-ch-name { font-weight:600; font-size:12.5px; margin-bottom:2px; }
+  .tv-ch-desc { font-size:11px; color:var(--muted); line-height:1.4; }
+  .live-badge { display:inline-flex; align-items:center; gap:5px; background:rgba(229,62,62,0.15); border:1px solid rgba(229,62,62,0.3); color:#fc8181; font-size:10px; font-weight:600; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; }
+  .vod-badge { display:inline-flex; align-items:center; gap:4px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.25); color:#6ee7b7; font-size:9px; font-weight:700; padding:2px 7px; border-radius:999px; text-transform:uppercase; letter-spacing:0.06em; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  footer a { color: #a78bfa; text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .hero { padding: 4rem 1.2rem 3rem; }
+    .section { padding: 3rem 1.2rem; }
+    .wiki-grid { grid-template-columns: 1fr; }
+    .wiki-sidebar { position: static; }
+    .hero-stats { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVEGACIÓN ── -->
+<nav>
+  <a class="nav-brand" href="#">🌐 Mi Portal Digital</a>
+  <div class="nav-links">
+    <a href="#wiki">Wiki</a>
+    <a href="#radio">Radio</a>
+    <a href="#tv">Televisión</a>
+  </div>
+  <div class="nav-live">
+    <span class="dot"></span> En vivo
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-eyebrow">
+    ✦ Portal multimedia completo
+  </div>
+  <h1>Tu espacio digital<br><span class="accent">Wiki · Radio · TV</span></h1>
+  <p>Un portal completo con enciclopedia interconectada, radio en línea con streaming en vivo y canal de televisión con programación integrada.</p>
+  <div class="hero-btns">
+    <a href="#wiki" class="btn btn-primary">📖 Explorar Wiki</a>
+    <a href="#radio" class="btn btn-ghost">🎙️ Escuchar Radio</a>
+    <a href="#tv" class="btn btn-ghost">📺 Ver TV</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">Wiki</div>
+      <div class="stat-label">Enciclopedia</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Radio</div>
+      <div class="stat-label">Streaming 24/7</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">TV</div>
+      <div class="stat-label">Canales en vivo</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════
+     MÓDULO 1 — WIKI
+══════════════════════════════ -->
+<section class="section" id="wiki">
+  <div class="section-tag tag-purple">📖 Módulo 1</div>
+  <h2 class="section-title">Wiki · Diccionario Digital</h2>
+  <p class="section-desc">Navega términos y definiciones organizados alfabéticamente con enlaces entre páginas interconectadas.</p>
+
+  <div class="wiki-search">
+    <input type="text" id="wikiSearch" placeholder="Buscar un término... (ej: CMS, HTML, Streaming)" oninput="filterWiki()">
+  </div>
+
+  <div class="wiki-grid">
+    <aside class="wiki-sidebar">
+      <div class="wiki-sidebar-header">Índice A–Z</div>
+      <ul class="wiki-nav">
+        <li><a href="#termA"><span class="letter">A</span> API</a></li>
+        <li><a href="#termB"><span class="letter">B</span> Blog</a></li>
+        <li><a href="#termC"><span class="letter">C</span> CMS</a></li>
+        <li><a href="#termD"><span class="letter">D</span> Dominio</a></li>
+        <li><a href="#termH"><span class="letter">H</span> Hosting</a></li>
+        <li><a href="#termP"><span class="letter">P</span> Podcast</a></li>
+        <li><a href="#termS"><span class="letter">S</span> Streaming</a></li>
+        <li><a href="#termW"><span class="letter">W</span> Wiki</a></li>
+      </ul>
+    </aside>
+
+    <div class="wiki-content" id="wikiContent">
+
+      <div class="wiki-card" id="termA" data-term="api">
+        <div class="wiki-card-header">
+          <div class="wiki-letter-badge">A</div>
+          <span class="wiki-term">API — Interfaz de Programación</span>
+        </div>
+        <p class="wiki-def">Una API (Application Programming Interface) es un conjunto de reglas y protocolos que permite a diferentes aplicaciones comunicarse entre sí. Posibilita que tu portal consuma datos externos como listas de reproducción de radio, vídeos de YouTube o información de redes sociales.</p>
+        <div class="wiki-tags">
+          <a href="#termS" class="wiki-tag">→ Streaming</a>
+          <a href="#termC" class="wiki-tag">→ CMS</a>
+          <span class="wiki-tag">Tecnología</span>
+        </div>
+      </div>
+
+      <div class="wiki-card" id="termB" data-term="blog">
+        <div class="wiki-card-header">
+          <div class="wiki-letter-badge">B</div>
+          <span class="wiki-term">Blog — Bitácora digital</span>
+        </div>
+        <p class="wiki-def">Un blog es una publicación web con entradas ordenadas cronológicamente. Puede integrarse en tu portal como sección de noticias, programación de radio o actualizaciones de tu canal de TV.</p>
+        <div class="wiki-tags">
+          <a href="#termC" class="wiki-tag">→ CMS</a>
+          <a href="#termW" class="wiki-tag">→ Wiki</a>
+          <span class="wiki-tag">Contenido</span>
+        </div>
+      </div>
+
+      <div class="wiki-card" id="termC" data-term="cms">
+        <div class="wiki-card-header">
+          <div class="wiki-letter-badge">C</div>
+          <span class="wiki-term">CMS — Sistema de Gestión de Contenido</span>
+        </div>
+        <p class="wiki-def">Un CMS (Content Management System) como WordPress, Joomla o Ghost te permite crear, editar y publicar contenido sin necesidad de programar. Es el motor detrás de tu wiki, radio y canal de TV.</p>
+        <div class="wiki-tags">
+          <a href="#termW" class="wiki-tag">→ Wiki</a>
+          <a href="#termH" class="wiki-tag">→ Hosting</a>
+          <span class="wiki-tag">Gestión</span>
+        </div>
+      </div>
+
+      <div class="wiki-card" id="termD" data-term="dominio">
+        <div class="wiki-card-header">
+          <div class="wiki-letter-badge">D</div>
+          <span class="wiki-term">Dominio — Dirección web</span>
+        </div>
+        <p class="wiki-def">Un dominio es la dirección única de tu portal en internet (ej: miportal.com). Se compra a registradores como Namecheap o se obtiene gratis en plataformas como Freenom con extensiones .tk o .ml.</p>
+        <div class="wiki-tags">
+          <a href="#termH" class="wiki-tag">→ Hosting</a>
+          <span class="wiki-tag">Infraestructura</span>
+        </div>
+      </div>
+
+      <div class="wiki-card" id="termH" data-term="hosting">
+        <div class="wiki-card-header">
+          <div class="wiki-letter-badge">H</div>
+          <span class="wiki-term">Hosting — Alojamiento web</span>
+        </div>
+        <p class="wiki-def">El hosting es el servicio que almacena los archivos de tu portal y los sirve a los visitantes. Opciones gratuitas: GitHub Pages (estático), InfinityFree (PHP+MySQL), Netlify. Para tu portal multimedia se recomienda InfinityFree o 000WebHost.</p>
+        <div class="wiki-tags">
+          <a href="#termD" class="wiki-tag">→ Dominio</a>
+          <a href="#termC" class="wiki-tag">→ CMS</a>
+          <span class="wiki-tag">Infraestructura</span>
+        </div>
+      </div>
+
+      <div class="wiki-card" id="termP" data-term="podcast">
+        <div class="wiki-card-header">
+          <div class="wiki-letter-badge">P</div>
+          <span class="wiki-term">Podcast — Audio bajo demanda</span>
+        </div>
+        <p class="wiki-def">Un podcast es un programa de audio disponible bajo demanda, descargable y suscribible mediante RSS. Se diferencia del streaming de radio en que el oyente elige cuándo escuchar. Puede integrarse en tu radio online mediante plataformas como Spreaker o Anchor.</p>
+        <div class="wiki-tags">
+          <a href="#termS" class="wiki-tag">→ Streaming</a>
+          <span class="wiki-tag">Audio</span>
+        </div>
+      </div>
+
+      <div class="wiki-card" id="termS" data-term="streaming">
+        <div class="wiki-card-header">
+          <div class="wiki-letter-badge">S</div>
+          <span class="wiki-term">Streaming — Transmisión en tiempo real</span>
+        </div>
+        <p class="wiki-def">El streaming es la transmisión continua de audio o vídeo en tiempo real a través de internet sin necesidad de descargar el archivo completo. Tu radio usa streaming de audio (Icecast/AzuraCast) y tu TV usa streaming de vídeo (YouTube Live / Twitch).</p>
+        <div class="wiki-tags">
+          <a href="#termA" class="wiki-tag">→ API</a>
+          <span class="wiki-tag">Tecnología</span>
+          <span class="wiki-tag">Multimedia</span>
+        </div>
+      </div>
+
+      <div class="wiki-card" id="termW" data-term="wiki">
+        <div class="wiki-card-header">
+          <div class="wiki-letter-badge">W</div>
+          <span class="wiki-term">Wiki — Enciclopedia colaborativa</span>
+        </div>
+        <p class="wiki-def">Una wiki es una colección de páginas web interconectadas que pueden ser editadas por los usuarios. El nombre proviene del hawaiano "wiki wiki" (rápido). La más famosa es Wikipedia. En tu portal, la wiki funciona como diccionario temático con términos enlazados entre sí.</p>
+        <div class="wiki-tags">
+          <a href="#termC" class="wiki-tag">→ CMS</a>
+          <a href="#termB" class="wiki-tag">→ Blog</a>
+          <span class="wiki-tag">Colaboración</span>
+        </div>
+      </div>
+
+    </div><!-- /wiki-content -->
+  </div><!-- /wiki-grid -->
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════
+     MÓDULO 2 — RADIO
+══════════════════════════════ -->
+<section class="section" id="radio">
+  <div class="section-tag tag-red">🎙️ Módulo 2</div>
+  <h2 class="section-title">Radio en Línea</h2>
+  <p class="section-desc">Escucha estaciones de radio en streaming directo desde el portal. Reproducción integrada, sin salir de la página.</p>
+
+  <!-- Player principal: Radio Online Honduras (Zeno.fm público) -->
+  <div class="radio-player">
+    <div class="radio-icon">🎙️</div>
+    <div class="radio-title">Radio en Vivo — Selección Musical</div>
+    <div class="radio-subtitle">Streaming continuo 24/7 · Calidad HD</div>
+    <!-- Player de Zeno.fm (público y embebible) -->
+    <iframe class="radio-embed" src="https://zeno.fm/player/tropical-music/" frameborder="0" width="100%" height="150" scrolling="no" allow="autoplay"></iframe>
+  </div>
+
+  <!-- Canales de radio -->
+  <div class="radio-channels">
+
+    <div class="radio-ch">
+      <div class="radio-ch-top">
+        <div class="radio-dot" style="background:#f59e0b"></div>
+        <span class="radio-ch-name">Tropical Mix</span>
+      </div>
+      <div class="radio-ch-genre">Salsa · Merengue · Cumbia</div>
+      <iframe src="https://zeno.fm/player/tropical-music/" frameborder="0" width="100%" height="80" scrolling="no" allow="autoplay" style="border-radius:8px;margin-top:8px"></iframe>
+      <a href="https://zeno.fm/tropical-music/" target="_blank">▶ Abrir en Zeno.fm ↗</a>
+    </div>
+
+    <div class="radio-ch">
+      <div class="radio-ch-top">
+        <div class="radio-dot" style="background:#10b981"></div>
+        <span class="radio-ch-name">Reggaeton Zone</span>
+      </div>
+      <div class="radio-ch-genre">Reggaeton · Urbano · Latino</div>
+      <iframe src="https://zeno.fm/player/reggaeton-zone/" frameborder="0" width="100%" height="80" scrolling="no" allow="autoplay" style="border-radius:8px;margin-top:8px"></iframe>
+      <a href="https://zeno.fm/reggaeton-zone/" target="_blank">▶ Abrir en Zeno.fm ↗</a>
+    </div>
+
+    <div class="radio-ch">
+      <div class="radio-ch-top">
+        <div class="radio-dot" style="background:#60a5fa"></div>
+        <span class="radio-ch-name">Chill Lofi Beats</span>
+      </div>
+      <div class="radio-ch-genre">Lo-Fi · Ambient · Study Music</div>
+      <iframe src="https://zeno.fm/player/chill-lofi-beats/" frameborder="0" width="100%" height="80" scrolling="no" allow="autoplay" style="border-radius:8px;margin-top:8px"></iframe>
+      <a href="https://zeno.fm/chill-lofi-beats/" target="_blank">▶ Abrir en Zeno.fm ↗</a>
+    </div>
+
+    <div class="radio-ch">
+      <div class="radio-ch-top">
+        <div class="radio-dot" style="background:#f472b6"></div>
+        <span class="radio-ch-name">Pop Internacional</span>
+      </div>
+      <div class="radio-ch-genre">Pop · Top 40 · Hits</div>
+      <iframe src="https://zeno.fm/player/pop-music-hits/" frameborder="0" width="100%" height="80" scrolling="no" allow="autoplay" style="border-radius:8px;margin-top:8px"></iframe>
+      <a href="https://zeno.fm/pop-music-hits/" target="_blank">▶ Abrir en Zeno.fm ↗</a>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════
+     MÓDULO 3 — TELEVISIÓN
+══════════════════════════════ -->
+<section class="section" id="tv">
+  <div class="section-tag tag-green">📺 Módulo 3</div>
+  <h2 class="section-title">Televisión en Línea</h2>
+  <p class="section-desc">Haz clic en cualquier canal y el vídeo se reproduce aquí mismo, sin salir del portal.</p>
+
+  <!-- ── REPRODUCTOR PRINCIPAL ── -->
+  <div class="tv-player-wrap">
+    <div class="tv-player-screen">
+      <iframe
+        id="mainPlayer"
+        src="https://www.youtube.com/embed/21X5lGlDOfg?autoplay=1&rel=0&modestbranding=1"
+        title="Reproductor principal"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="tv-player-info">
+      <div class="tv-player-badges">
+        <div class="live-badge"><span class="dot"></span> EN VIVO</div>
+        <span class="tv-cat-badge" id="playerCat">Ciencia &amp; Espacio</span>
+      </div>
+      <div class="tv-player-title" id="playerTitle">🚀 NASA TV — En vivo</div>
+      <div class="tv-player-desc" id="playerDesc">Transmisiones en directo de la NASA: lanzamientos, caminatas espaciales, noticias y exploración del universo. Señal continua 24 horas.</div>
+      <div class="tv-player-meta">
+        <span id="playerType" class="tv-meta-pill live">🔴 En vivo</span>
+        <span class="tv-meta-pill">📺 Integrado en el portal</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CATEGORÍAS ── -->
+  <div class="tv-cats">
+    <button class="tv-cat active" onclick="filterCat('todos',this)">Todos</button>
+    <button class="tv-cat" onclick="filterCat('noticias',this)">Noticias</button>
+    <button class="tv-cat" onclick="filterCat('ciencia',this)">Ciencia</button>
+    <button class="tv-cat" onclick="filterCat('cultura',this)">Cultura</button>
+    <button class="tv-cat" onclick="filterCat('doc',this)">Documentales</button>
+    <button class="tv-cat" onclick="filterCat('cine',this)">Cine</button>
+  </div>
+
+  <!-- ── GRILLA DE CANALES ── -->
+  <div class="tv-grid" id="tvGrid">
+
+    <!-- EN VIVO -->
+    <div class="tv-card active-ch" data-cat="ciencia" onclick="playVideo('21X5lGlDOfg','NASA TV — En vivo 🚀','Transmisiones de la NASA: lanzamientos, caminatas espaciales y exploración del universo 24h.','Ciencia &amp; Espacio','live',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#0f2027,#203a43)">
+        🚀
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge live-badge" style="position:absolute;top:8px;left:8px;margin:0"><span class="dot"></span>En vivo</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">NASA TV</div>
+        <div class="tv-ch-desc">Ciencia · Espacio · Lanzamientos</div>
+      </div>
+    </div>
+
+    <div class="tv-card" data-cat="noticias" onclick="playVideo('oy9KoElOXl4','DW Noticias en Español 📰','Noticias internacionales en español las 24 horas desde Deutsche Welle, Alemania.','Noticias','live',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#1a0533,#2d0b5e)">
+        📰
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge live-badge" style="position:absolute;top:8px;left:8px;margin:0"><span class="dot"></span>En vivo</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">DW Español</div>
+        <div class="tv-ch-desc">Noticias · Internacional · 24h</div>
+      </div>
+    </div>
+
+    <div class="tv-card" data-cat="noticias" onclick="playVideo('w_Ma8oQLmSM','France 24 Español 🌍','Canal de noticias internacionales de France 24 en español, en directo las 24 horas.','Noticias','live',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#1a1a00,#3d3d00)">
+        🌍
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge live-badge" style="position:absolute;top:8px;left:8px;margin:0"><span class="dot"></span>En vivo</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">France 24 ES</div>
+        <div class="tv-ch-desc">Noticias · Francia · Internacional</div>
+      </div>
+    </div>
+
+    <div class="tv-card" data-cat="ciencia" onclick="playVideo('KaOC9danxNo','Euronews en Español 📡','Euronews en vivo en español: política, economía, ciencia y tecnología desde Europa.','Ciencia &amp; Actualidad','live',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#001a3d,#003366)">
+        📡
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge live-badge" style="position:absolute;top:8px;left:8px;margin:0"><span class="dot"></span>En vivo</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Euronews ES</div>
+        <div class="tv-ch-desc">Europa · Tecnología · Economía</div>
+      </div>
+    </div>
+
+    <!-- DOCUMENTALES -->
+    <div class="tv-card" data-cat="doc" onclick="playVideo('1GUuJe_EQjs','Naturaleza Salvaje 🌿','Impresionantes documentales de naturaleza: animales, ecosistemas y maravillas del planeta Tierra.','Documentales','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#0a2818,#0d4f2a)">
+        🌿
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Naturaleza Salvaje</div>
+        <div class="tv-ch-desc">Documentales · Animales · Planeta</div>
+      </div>
+    </div>
+
+    <div class="tv-card" data-cat="doc" onclick="playVideo('RkdH_LXePNs','Historia del Mundo 🏛️','Documentales históricos: civilizaciones antiguas, guerras, inventos y personajes que cambiaron el mundo.','Historia','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#2a1800,#5a3600)">
+        🏛️
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Historia del Mundo</div>
+        <div class="tv-ch-desc">Civilizaciones · Guerras · Inventos</div>
+      </div>
+    </div>
+
+    <div class="tv-card" data-cat="doc" onclick="playVideo('iAqJcVzFoM8','Cosmos y Universo 🌌','Documentales del universo: planetas, galaxias, agujeros negros y los misterios del cosmos.','Ciencia','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#05001a,#12003d)">
+        🌌
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Cosmos &amp; Universo</div>
+        <div class="tv-ch-desc">Astronomía · Física · Espacio</div>
+      </div>
+    </div>
+
+    <!-- CULTURA -->
+    <div class="tv-card" data-cat="cultura" onclick="playVideo('_FBtFGiCELM','Arte y Cultura 🎨','Recorridos virtuales por museos, exposiciones de arte, conciertos en vivo y patrimonio cultural del mundo.','Cultura &amp; Arte','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#1a0020,#3d0050)">
+        🎨
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Arte &amp; Cultura</div>
+        <div class="tv-ch-desc">Museos · Conciertos · Exposiciones</div>
+      </div>
+    </div>
+
+    <div class="tv-card" data-cat="cultura" onclick="playVideo('tPEE9ZwImy0','Música en Vivo 🎵','Los mejores conciertos en vivo, festivales de música y actuaciones de artistas internacionales.','Música','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#001a1a,#003333)">
+        🎵
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Música en Vivo</div>
+        <div class="tv-ch-desc">Conciertos · Festivales · Artistas</div>
+      </div>
+    </div>
+
+    <!-- CINE -->
+    <div class="tv-card" data-cat="cine" onclick="playVideo('BbZ0eHBWm2k','Cine Clásico Gratis 🎬','Películas clásicas en dominio público: comedias, dramas y aventuras de los años dorados del cine.','Cine Clásico','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#1a0a00,#3d1c00)">
+        🎬
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Cine Clásico</div>
+        <div class="tv-ch-desc">Películas · Dominio Público · Gratis</div>
+      </div>
+    </div>
+
+    <div class="tv-card" data-cat="cine" onclick="playVideo('vZ_YpOvRd3o','Cortos Animados 🎞️','Los mejores cortometrajes animados y de comedia en dominio público, para toda la familia.','Animación','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#001a0a,#003319)">
+        🎞️
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Cortos Animados</div>
+        <div class="tv-ch-desc">Animación · Cortometrajes · Familia</div>
+      </div>
+    </div>
+
+    <div class="tv-card" data-cat="ciencia" onclick="playVideo('qCrVpLer4IE','TED Talks en Español 💡','Las charlas TED más inspiradoras traducidas al español: tecnología, ciencia, creatividad y liderazgo.','Educación','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#1a0000,#3d0000)">
+        💡
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">TED Talks ES</div>
+        <div class="tv-ch-desc">Tecnología · Inspiración · Ciencia</div>
+      </div>
+    </div>
+
+  </div><!-- /tv-grid -->
+</section>
+
+<hr class="divider">
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p style="margin-bottom:6px">
+    <strong style="color:var(--text)">🌐 Mi Portal Digital</strong> — Wiki · Radio · TV
+  </p>
+  <p>Construido con HTML puro · Hospedado en <a href="https://pages.github.com" target="_blank">GitHub Pages</a> · Radio via <a href="https://zeno.fm" target="_blank">Zeno.fm</a> · TV via <a href="https://youtube.com" target="_blank">YouTube</a></p>
+  <p style="margin-top:8px; font-size:11px">© 2025 Mi Portal Digital — Todos los derechos reservados</p>
+</footer>
+
+<script>
+  function playVideo(videoId, title, desc, cat, type, el) {
+    const player = document.getElementById('mainPlayer');
+    player.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1';
+    document.getElementById('playerTitle').textContent = title;
+    document.getElementById('playerDesc').textContent = desc;
+    document.getElementById('playerCat').textContent = cat;
+    const pill = document.getElementById('playerType');
+    pill.textContent = type === 'live' ? '🔴 En vivo' : '🎬 Video';
+    pill.className = 'tv-meta-pill ' + type;
+    document.querySelectorAll('.tv-card').forEach(c => c.classList.remove('active-ch'));
+    el.classList.add('active-ch');
+    document.getElementById('tv').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  function filterCat(cat, btn) {
+    document.querySelectorAll('.tv-cat').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tv-card').forEach(card => {
+      card.style.display = (cat === 'todos' || card.dataset.cat === cat) ? '' : 'none';
+    });
+  }
+
+
+    const q = document.getElementById('wikiSearch').value.toLowerCase();
+    const cards = document.querySelectorAll('.wiki-card');
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      const term = card.getAttribute('data-term') || '';
+      card.style.display = (text.includes(q) || term.includes(q) || q === '') ? '' : 'none';
+    });
+  }
+
+  // Resalta el enlace de nav activo al hacer scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--text)'
+        : 'var(--muted)';
+    });
+  });
+</script>
+</body>
+</html>
