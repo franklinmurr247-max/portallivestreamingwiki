@@ -312,6 +312,7 @@
     transition: border-color 0.15s;
   }
   .radio-ch:hover { border-color: var(--border2); }
+  .radio-ch.active-radio { border-color: var(--accent); background: rgba(124,58,237,0.08); }
   .radio-ch-top { display: flex; align-items: center; gap: 10px; margin-bottom: 0.4rem; }
   .radio-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .radio-ch-name { font-weight: 600; font-size: 14px; }
@@ -569,56 +570,51 @@
   <h2 class="section-title">Radio en Línea</h2>
   <p class="section-desc">Escucha estaciones de radio en streaming directo desde el portal. Reproducción integrada, sin salir de la página.</p>
 
-  <!-- Player principal: Radio Online Honduras (Zeno.fm público) -->
+  <!-- Player principal de Radio -->
   <div class="radio-player">
     <div class="radio-icon">🎙️</div>
-    <div class="radio-title">Radio en Vivo — Selección Musical</div>
+    <div class="radio-title" id="mainRadioTitle">Tropical Mix — Salsa · Merengue · Cumbia</div>
     <div class="radio-subtitle">Streaming continuo 24/7 · Calidad HD</div>
-    <!-- Player de Zeno.fm (público y embebible) -->
-    <iframe class="radio-embed" src="https://zeno.fm/player/tropical-music/" frameborder="0" width="100%" height="150" scrolling="no" allow="autoplay"></iframe>
+    <iframe id="mainRadioFrame" class="radio-embed" src="https://zeno.fm/player/tropical-music/" frameborder="0" width="100%" height="150" scrolling="no" allow="autoplay"></iframe>
   </div>
 
   <!-- Canales de radio -->
   <div class="radio-channels">
 
-    <div class="radio-ch">
+    <div class="radio-ch active-radio" onclick="playRadio('tropical-music','Tropical Mix — Salsa · Merengue · Cumbia',this)" style="cursor:pointer">
       <div class="radio-ch-top">
         <div class="radio-dot" style="background:#f59e0b"></div>
         <span class="radio-ch-name">Tropical Mix</span>
       </div>
       <div class="radio-ch-genre">Salsa · Merengue · Cumbia</div>
-      <iframe src="https://zeno.fm/player/tropical-music/" frameborder="0" width="100%" height="80" scrolling="no" allow="autoplay" style="border-radius:8px;margin-top:8px"></iframe>
-      <a href="https://zeno.fm/tropical-music/" target="_blank">▶ Abrir en Zeno.fm ↗</a>
+      <a href="https://zeno.fm/tropical-music/" target="_blank" onclick="event.stopPropagation()">▶ Abrir en Zeno.fm ↗</a>
     </div>
 
-    <div class="radio-ch">
+    <div class="radio-ch" onclick="playRadio('reggaeton-zone','Reggaeton Zone — Reggaeton · Urbano · Latino',this)" style="cursor:pointer">
       <div class="radio-ch-top">
         <div class="radio-dot" style="background:#10b981"></div>
         <span class="radio-ch-name">Reggaeton Zone</span>
       </div>
       <div class="radio-ch-genre">Reggaeton · Urbano · Latino</div>
-      <iframe src="https://zeno.fm/player/reggaeton-zone/" frameborder="0" width="100%" height="80" scrolling="no" allow="autoplay" style="border-radius:8px;margin-top:8px"></iframe>
-      <a href="https://zeno.fm/reggaeton-zone/" target="_blank">▶ Abrir en Zeno.fm ↗</a>
+      <a href="https://zeno.fm/reggaeton-zone/" target="_blank" onclick="event.stopPropagation()">▶ Abrir en Zeno.fm ↗</a>
     </div>
 
-    <div class="radio-ch">
+    <div class="radio-ch" onclick="playRadio('chill-lofi-beats','Chill Lofi Beats — Lo-Fi · Ambient · Study Music',this)" style="cursor:pointer">
       <div class="radio-ch-top">
         <div class="radio-dot" style="background:#60a5fa"></div>
         <span class="radio-ch-name">Chill Lofi Beats</span>
       </div>
       <div class="radio-ch-genre">Lo-Fi · Ambient · Study Music</div>
-      <iframe src="https://zeno.fm/player/chill-lofi-beats/" frameborder="0" width="100%" height="80" scrolling="no" allow="autoplay" style="border-radius:8px;margin-top:8px"></iframe>
-      <a href="https://zeno.fm/chill-lofi-beats/" target="_blank">▶ Abrir en Zeno.fm ↗</a>
+      <a href="https://zeno.fm/chill-lofi-beats/" target="_blank" onclick="event.stopPropagation()">▶ Abrir en Zeno.fm ↗</a>
     </div>
 
-    <div class="radio-ch">
+    <div class="radio-ch" onclick="playRadio('pop-music-hits','Pop Internacional — Pop · Top 40 · Hits',this)" style="cursor:pointer">
       <div class="radio-ch-top">
         <div class="radio-dot" style="background:#f472b6"></div>
         <span class="radio-ch-name">Pop Internacional</span>
       </div>
       <div class="radio-ch-genre">Pop · Top 40 · Hits</div>
-      <iframe src="https://zeno.fm/player/pop-music-hits/" frameborder="0" width="100%" height="80" scrolling="no" allow="autoplay" style="border-radius:8px;margin-top:8px"></iframe>
-      <a href="https://zeno.fm/pop-music-hits/" target="_blank">▶ Abrir en Zeno.fm ↗</a>
+      <a href="https://zeno.fm/pop-music-hits/" target="_blank" onclick="event.stopPropagation()">▶ Abrir en Zeno.fm ↗</a>
     </div>
 
   </div>
@@ -639,7 +635,7 @@
     <div class="tv-player-screen">
       <iframe
         id="mainPlayer"
-        src="https://www.youtube.com/embed/21X5lGlDOfg?autoplay=1&rel=0&modestbranding=1"
+        src="https://www.youtube.com/embed/21X5lGlDOfg?autoplay=0&rel=0&modestbranding=1"
         title="Reproductor principal"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
         allowfullscreen>
@@ -857,7 +853,7 @@
     });
   }
 
-
+  function filterWiki() {
     const q = document.getElementById('wikiSearch').value.toLowerCase();
     const cards = document.querySelectorAll('.wiki-card');
     cards.forEach(card => {
@@ -865,6 +861,14 @@
       const term = card.getAttribute('data-term') || '';
       card.style.display = (text.includes(q) || term.includes(q) || q === '') ? '' : 'none';
     });
+  }
+
+  // Radio: cambiar canal desde la grilla
+  function playRadio(zenoSlug, name, el) {
+    document.getElementById('mainRadioFrame').src = 'https://zeno.fm/player/' + zenoSlug + '/';
+    document.getElementById('mainRadioTitle').textContent = name;
+    document.querySelectorAll('.radio-ch').forEach(c => c.classList.remove('active-radio'));
+    el.classList.add('active-radio');
   }
 
   // Resalta el enlace de nav activo al hacer scroll
