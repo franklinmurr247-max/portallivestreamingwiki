@@ -382,6 +382,16 @@
 </head>
 <body>
 
+<!-- ── AVISO FILE:// ── -->
+<div id="fileWarning" style="display:none; background:#7c2d12; border-bottom:2px solid #f97316; padding:14px 2rem; text-align:center; font-size:14px; line-height:1.6; color:#fed7aa; position:sticky; top:0; z-index:200">
+  ⚠️ <strong style="color:#fff">El portal no puede reproducir vídeo ni radio desde tu computadora.</strong>
+  YouTube y Zeno.fm bloquean iframes en archivos locales (<code style="background:rgba(0,0,0,0.3);padding:1px 6px;border-radius:4px">file://</code>).<br>
+  Para que todo funcione debes subir el archivo a un servidor web. La opción más fácil y gratuita es
+  <a href="https://pages.github.com" target="_blank" style="color:#fb923c;font-weight:600">GitHub Pages ↗</a> —
+  sube el <code style="background:rgba(0,0,0,0.3);padding:1px 6px;border-radius:4px">index.html</code> a un repositorio público y en 2 minutos tendrás tu portal en línea.
+  <button onclick="document.getElementById('fileWarning').style.display='none'" style="margin-left:12px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:3px 12px;border-radius:6px;cursor:pointer;font-size:12px">✕ Cerrar</button>
+</div>
+
 <!-- ── NAVEGACIÓN ── -->
 <nav>
   <a class="nav-brand" href="#">🌐 Mi Portal Digital</a>
@@ -635,7 +645,7 @@
     <div class="tv-player-screen">
       <iframe
         id="mainPlayer"
-        src="https://www.youtube.com/embed/21X5lGlDOfg?autoplay=0&rel=0&modestbranding=1"
+        src="https://www.youtube.com/embed/FuuC4dpSQ1M?rel=0&modestbranding=1"
         title="Reproductor principal"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
         allowfullscreen>
@@ -643,11 +653,11 @@
     </div>
     <div class="tv-player-info">
       <div class="tv-player-badges">
-        <div class="live-badge"><span class="dot"></span> EN VIVO</div>
+        <div class="live-badge"><span class="dot"></span> NASA</div>
         <span class="tv-cat-badge" id="playerCat">Ciencia &amp; Espacio</span>
       </div>
-      <div class="tv-player-title" id="playerTitle">🚀 NASA TV — En vivo</div>
-      <div class="tv-player-desc" id="playerDesc">Transmisiones en directo de la NASA: lanzamientos, caminatas espaciales, noticias y exploración del universo. Señal continua 24 horas.</div>
+      <div class="tv-player-title" id="playerTitle">🚀 ISS — Vista desde el espacio</div>
+      <div class="tv-player-desc" id="playerDesc">Transmisión en vivo de la NASA desde la Estación Espacial Internacional. Vistas de la Tierra desde el espacio exterior.</div>
       <div class="tv-player-meta">
         <span id="playerType" class="tv-meta-pill live">🔴 En vivo</span>
         <span class="tv-meta-pill">📺 Integrado en el portal</span>
@@ -668,24 +678,37 @@
   <!-- ── GRILLA DE CANALES ── -->
   <div class="tv-grid" id="tvGrid">
 
-    <!-- EN VIVO -->
-    <div class="tv-card active-ch" data-cat="ciencia" onclick="playVideo('21X5lGlDOfg','NASA TV — En vivo 🚀','Transmisiones de la NASA: lanzamientos, caminatas espaciales y exploración del universo 24h.','Ciencia &amp; Espacio','live',this)">
+    <!-- CIENCIA -->
+    <div class="tv-card active-ch" data-cat="ciencia" onclick="playVideo('FuuC4dpSQ1M','ISS — Vista desde el espacio 🚀','Transmisión en vivo de la NASA desde la Estación Espacial Internacional. Vistas de la Tierra desde el espacio exterior.','Ciencia &amp; Espacio','vod',this)">
       <div class="tv-thumb" style="background:linear-gradient(135deg,#0f2027,#203a43)">
         🚀
         <div class="tv-play-btn"><span>▶</span></div>
-        <div class="tv-thumb-badge live-badge" style="position:absolute;top:8px;left:8px;margin:0"><span class="dot"></span>En vivo</div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">NASA</div>
       </div>
       <div class="tv-info">
-        <div class="tv-ch-name">NASA TV</div>
-        <div class="tv-ch-desc">Ciencia · Espacio · Lanzamientos</div>
+        <div class="tv-ch-name">NASA — ISS Live</div>
+        <div class="tv-ch-desc">Ciencia · Espacio · Tierra</div>
       </div>
     </div>
 
-    <div class="tv-card" data-cat="noticias" onclick="playVideo('oy9KoElOXl4','DW Noticias en Español 📰','Noticias internacionales en español las 24 horas desde Deutsche Welle, Alemania.','Noticias','live',this)">
+    <div class="tv-card" data-cat="ciencia" onclick="playVideo('HW29067KVmo','Kurzgesagt — El Universo 🌌','¿Qué tan grande es el universo? Una explicación visual fascinante del cosmos y nuestra pequeñez en él.','Ciencia','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#05001a,#12003d)">
+        🌌
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Kurzgesagt</div>
+        <div class="tv-ch-desc">Universo · Animación · Ciencia</div>
+      </div>
+    </div>
+
+    <!-- NOTICIAS -->
+    <div class="tv-card" data-cat="noticias" onclick="playVideo('tsStUN73_6I','DW Noticias en Español 📰','Noticias internacionales en español desde Deutsche Welle, Alemania. Análisis y reportajes 24h.','Noticias','vod',this)">
       <div class="tv-thumb" style="background:linear-gradient(135deg,#1a0533,#2d0b5e)">
         📰
         <div class="tv-play-btn"><span>▶</span></div>
-        <div class="tv-thumb-badge live-badge" style="position:absolute;top:8px;left:8px;margin:0"><span class="dot"></span>En vivo</div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
       </div>
       <div class="tv-info">
         <div class="tv-ch-name">DW Español</div>
@@ -693,11 +716,11 @@
       </div>
     </div>
 
-    <div class="tv-card" data-cat="noticias" onclick="playVideo('w_Ma8oQLmSM','France 24 Español 🌍','Canal de noticias internacionales de France 24 en español, en directo las 24 horas.','Noticias','live',this)">
+    <div class="tv-card" data-cat="noticias" onclick="playVideo('zTv0hCakAhg','France 24 Español 🌍','Noticias internacionales de France 24 en español: política, economía y cultura del mundo.','Noticias','vod',this)">
       <div class="tv-thumb" style="background:linear-gradient(135deg,#1a1a00,#3d3d00)">
         🌍
         <div class="tv-play-btn"><span>▶</span></div>
-        <div class="tv-thumb-badge live-badge" style="position:absolute;top:8px;left:8px;margin:0"><span class="dot"></span>En vivo</div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
       </div>
       <div class="tv-info">
         <div class="tv-ch-name">France 24 ES</div>
@@ -705,90 +728,66 @@
       </div>
     </div>
 
-    <div class="tv-card" data-cat="ciencia" onclick="playVideo('KaOC9danxNo','Euronews en Español 📡','Euronews en vivo en español: política, economía, ciencia y tecnología desde Europa.','Ciencia &amp; Actualidad','live',this)">
-      <div class="tv-thumb" style="background:linear-gradient(135deg,#001a3d,#003366)">
-        📡
-        <div class="tv-play-btn"><span>▶</span></div>
-        <div class="tv-thumb-badge live-badge" style="position:absolute;top:8px;left:8px;margin:0"><span class="dot"></span>En vivo</div>
-      </div>
-      <div class="tv-info">
-        <div class="tv-ch-name">Euronews ES</div>
-        <div class="tv-ch-desc">Europa · Tecnología · Economía</div>
-      </div>
-    </div>
-
     <!-- DOCUMENTALES -->
-    <div class="tv-card" data-cat="doc" onclick="playVideo('1GUuJe_EQjs','Naturaleza Salvaje 🌿','Impresionantes documentales de naturaleza: animales, ecosistemas y maravillas del planeta Tierra.','Documentales','vod',this)">
+    <div class="tv-card" data-cat="doc" onclick="playVideo('Rdg7A-HO0GI','Documental: Fondo del Océano 🌿','Explora las profundidades del océano: criaturas marinas, ecosistemas y los misterios del mar.','Documentales','vod',this)">
       <div class="tv-thumb" style="background:linear-gradient(135deg,#0a2818,#0d4f2a)">
         🌿
         <div class="tv-play-btn"><span>▶</span></div>
         <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
       </div>
       <div class="tv-info">
-        <div class="tv-ch-name">Naturaleza Salvaje</div>
-        <div class="tv-ch-desc">Documentales · Animales · Planeta</div>
+        <div class="tv-ch-name">Fondo del Océano</div>
+        <div class="tv-ch-desc">Documental · Naturaleza · Mar</div>
       </div>
     </div>
 
-    <div class="tv-card" data-cat="doc" onclick="playVideo('RkdH_LXePNs','Historia del Mundo 🏛️','Documentales históricos: civilizaciones antiguas, guerras, inventos y personajes que cambiaron el mundo.','Historia','vod',this)">
+    <div class="tv-card" data-cat="doc" onclick="playVideo('yWkq-y1oMPs','Historia Antigua 🏛️','Documentales sobre civilizaciones antiguas: Egipto, Roma, Grecia y los grandes imperios de la historia.','Historia','vod',this)">
       <div class="tv-thumb" style="background:linear-gradient(135deg,#2a1800,#5a3600)">
         🏛️
         <div class="tv-play-btn"><span>▶</span></div>
         <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
       </div>
       <div class="tv-info">
-        <div class="tv-ch-name">Historia del Mundo</div>
-        <div class="tv-ch-desc">Civilizaciones · Guerras · Inventos</div>
-      </div>
-    </div>
-
-    <div class="tv-card" data-cat="doc" onclick="playVideo('iAqJcVzFoM8','Cosmos y Universo 🌌','Documentales del universo: planetas, galaxias, agujeros negros y los misterios del cosmos.','Ciencia','vod',this)">
-      <div class="tv-thumb" style="background:linear-gradient(135deg,#05001a,#12003d)">
-        🌌
-        <div class="tv-play-btn"><span>▶</span></div>
-        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
-      </div>
-      <div class="tv-info">
-        <div class="tv-ch-name">Cosmos &amp; Universo</div>
-        <div class="tv-ch-desc">Astronomía · Física · Espacio</div>
+        <div class="tv-ch-name">Historia Antigua</div>
+        <div class="tv-ch-desc">Civilizaciones · Roma · Egipto</div>
       </div>
     </div>
 
     <!-- CULTURA -->
-    <div class="tv-card" data-cat="cultura" onclick="playVideo('_FBtFGiCELM','Arte y Cultura 🎨','Recorridos virtuales por museos, exposiciones de arte, conciertos en vivo y patrimonio cultural del mundo.','Cultura &amp; Arte','vod',this)">
-      <div class="tv-thumb" style="background:linear-gradient(135deg,#1a0020,#3d0050)">
-        🎨
-        <div class="tv-play-btn"><span>▶</span></div>
-        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
-      </div>
-      <div class="tv-info">
-        <div class="tv-ch-name">Arte &amp; Cultura</div>
-        <div class="tv-ch-desc">Museos · Conciertos · Exposiciones</div>
-      </div>
-    </div>
-
-    <div class="tv-card" data-cat="cultura" onclick="playVideo('tPEE9ZwImy0','Música en Vivo 🎵','Los mejores conciertos en vivo, festivales de música y actuaciones de artistas internacionales.','Música','vod',this)">
+    <div class="tv-card" data-cat="cultura" onclick="playVideo('2Vv-BfVoq4g','Pink Floyd — Concierto Completo 🎵','Concierto completo de Pink Floyd. Una de las actuaciones más icónicas del rock progresivo de todos los tiempos.','Música','vod',this)">
       <div class="tv-thumb" style="background:linear-gradient(135deg,#001a1a,#003333)">
         🎵
         <div class="tv-play-btn"><span>▶</span></div>
         <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
       </div>
       <div class="tv-info">
-        <div class="tv-ch-name">Música en Vivo</div>
-        <div class="tv-ch-desc">Conciertos · Festivales · Artistas</div>
+        <div class="tv-ch-name">Pink Floyd Live</div>
+        <div class="tv-ch-desc">Rock · Concierto · Clásico</div>
+      </div>
+    </div>
+
+    <div class="tv-card" data-cat="cultura" onclick="playVideo('G7RgN9ijyE4','Louvre Virtual 🎨','Recorrido virtual por el Museo del Louvre en París: obras maestras, historia del arte y arquitectura.','Cultura &amp; Arte','vod',this)">
+      <div class="tv-thumb" style="background:linear-gradient(135deg,#1a0020,#3d0050)">
+        🎨
+        <div class="tv-play-btn"><span>▶</span></div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+      </div>
+      <div class="tv-info">
+        <div class="tv-ch-name">Museo del Louvre</div>
+        <div class="tv-ch-desc">Arte · París · Cultura</div>
       </div>
     </div>
 
     <!-- CINE -->
-    <div class="tv-card" data-cat="cine" onclick="playVideo('BbZ0eHBWm2k','Cine Clásico Gratis 🎬','Películas clásicas en dominio público: comedias, dramas y aventuras de los años dorados del cine.','Cine Clásico','vod',this)">
+    <div class="tv-card" data-cat="cine" onclick="playVideo('4saR9154agQ','Chaplin — El Chico (1921) 🎬','El Chico (The Kid) 1921 — Película completa de Charles Chaplin, dominio público. Comedia clásica del cine mudo.','Cine Clásico','vod',this)">
       <div class="tv-thumb" style="background:linear-gradient(135deg,#1a0a00,#3d1c00)">
         🎬
         <div class="tv-play-btn"><span>▶</span></div>
         <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
       </div>
       <div class="tv-info">
-        <div class="tv-ch-name">Cine Clásico</div>
-        <div class="tv-ch-desc">Películas · Dominio Público · Gratis</div>
+        <div class="tv-ch-name">Chaplin — El Chico</div>
+        <div class="tv-ch-desc">Cine Mudo · 1921 · Comedia</div>
       </div>
     </div>
 
@@ -804,15 +803,15 @@
       </div>
     </div>
 
-    <div class="tv-card" data-cat="ciencia" onclick="playVideo('qCrVpLer4IE','TED Talks en Español 💡','Las charlas TED más inspiradoras traducidas al español: tecnología, ciencia, creatividad y liderazgo.','Educación','vod',this)">
+    <div class="tv-card" data-cat="ciencia" onclick="playVideo('JB7jSFeVz1U','TED: El poder del cerebro 💡','Charla TED sobre neurociencia y el increíble poder del cerebro humano. Ciencia accesible para todos.','Educación','vod',this)">
       <div class="tv-thumb" style="background:linear-gradient(135deg,#1a0000,#3d0000)">
         💡
         <div class="tv-play-btn"><span>▶</span></div>
-        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">VOD</div>
+        <div class="tv-thumb-badge vod-badge" style="position:absolute;top:8px;left:8px;margin:0">TED</div>
       </div>
       <div class="tv-info">
-        <div class="tv-ch-name">TED Talks ES</div>
-        <div class="tv-ch-desc">Tecnología · Inspiración · Ciencia</div>
+        <div class="tv-ch-name">TED — Cerebro</div>
+        <div class="tv-ch-desc">Neurociencia · Educación · TED</div>
       </div>
     </div>
 
@@ -869,6 +868,11 @@
     document.getElementById('mainRadioTitle').textContent = name;
     document.querySelectorAll('.radio-ch').forEach(c => c.classList.remove('active-radio'));
     el.classList.add('active-radio');
+  }
+
+  // Detectar si se abre desde file:// y mostrar aviso
+  if (window.location.protocol === 'file:') {
+    document.getElementById('fileWarning').style.display = 'block';
   }
 
   // Resalta el enlace de nav activo al hacer scroll
